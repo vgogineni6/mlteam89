@@ -10,89 +10,70 @@
 
     <h2>Introduction/Background</h2>
     <p>
-        Stars, galaxies, and quasars need to be classified to analyze the structures of celestial formations. 
-        While telescope observations may be enough, datasets featuring different celestial objects can help classify them autonomously. 
-        We will classify stars, galaxies, and quasars in this project.
+        Stars, galaxies, and quasars need to be classified to analyze the structures of celestial formations. While telescope observations may be enough, datasets featuring different celestial objects can help classify them autonomously. We will classify stars, galaxies, and quasars in this project.
     </p>
 
     <h2>Literature Review</h2>
     <p>
-        There are several methods to classify celestial objects currently using ML. 
-        There is a 2023 paper that compares Random Forest, XGBoost, and K-NN for classifying galaxies, quasars, and stars (Zeraatgari et al.). 
-        This paper reported high accuracy for XGBoost and ensemble learning that included Random Forest (Zeraatgari et al.). 
-        There is research that suggests that the most important groups of features for classification are photometry, colors, and morphology (von Marttens et al., 2023). 
-        Finally, deep learning methods have been used on SDSS data that showed how CNNs and photometric images can be used for classification, with a peak accuracy of 90.7% (He et al., 2021). 
-        In comparison to XGBoost and Random Forest’s accuracy of 98.93%, deep learning methods may not perform as well but offer a suitable alternative (Zeraatgari et al.).
+        There are several methods to classify celestial objects currently using ML. There is a 2023 paper that compares Random Forest, XGBoost, and K-NN for classifying galaxies, quasars, and stars (Zeraatgari et al.). This paper reported high accuracy for XGBoost and ensemble learning that included Random Forest (Zeraatgari et al.). There is research that suggests that the most important groups of features for classification are photometry, colors, and morphology (von Marttens et al., 2023). Finally, deep learning methods have been used on SDSS data that showed how CNNs and photometric images can be used for classification, with a peak accuracy of 90.7% (He et al., 2021). In comparison to XGBoost and Random Forest’s accuracy of 98.93%, deep learning methods may not perform as well but offer a suitable alternative (Zeraatgari et al.).
+
     </p>
 
     <h2>Dataset Description</h2>
     <p>
-        The “Stellar Classification Dataset” is from Kaggle. The data is compiled from the Sloan Digital Sky Survey Data Release 17. 
-        There are 100,000 rows of data with 17 features/columns. The 18th column is the class, which includes the labels for the data. 
-        The labels can be GALAXY, STAR, or QSO (which is quasar).
+        The “Stellar Classification Dataset” is from Kaggle. The data is compiled from the Sloan Digital Sky Survey Data Release 17. There are 100,000 rows of data with 17 features/columns. The 18th column is the class, which includes the labels for the data. The labels can be GALAXY, STAR, or QSO (which is quasar).
+
     </p>
 
     <h2>Dataset</h2>
     <p>
-        <strong>Name:</strong> Stellar Classification Dataset <br>
-        <strong>URL:</strong> 
-        <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data" target="_blank">
-            https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data
-        </a>
+        Name: Stellar Classification Dataset<br>
+URL: https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data 
+
     </p>
 
     <h2>Problem Definition</h2>
 
     <h3>Problem</h3>
     <p>
-        Over 200 probes have been sent to explore celestial bodies outside Earth’s orbit. 
-        A significant chunk of these have even been sent into interstellar space. 
-        These probes were sent to broaden our understanding of the universe, and as data started flowing in, it was important to catalogue these bodies. 
-        We are mainly focusing on stars, galaxies, and quasars. 
-        The dataset we are using compiles the characteristics used to do this early cataloguing as well as the results obtained from it.
+        Over 200 probes have been sent to explore celestial bodies outside Earth’s orbit. A significant chunk of these have even been sent into interstellar space. These probes were sent to broaden our understanding of the universe, and as data started flowing in, it was important to catalogue these bodies. We are mainly focusing on stars, galaxies, and quasars. The dataset we are using compiles the characteristics used to do this early cataloguing as well as the results obtained from it.
+
     </p>
 
     <h3>Motivation</h3>
     <p>
-        Stellar objects such as stars, and galaxies, are observable to the naked eye. 
-        However, what we see is just a twinkle in the night sky. 
-        To truly know what the role of these objects play, it is important to classify them correctly. 
-        By leveraging data collected by probes we can use ML and statistical analysis to distinguish between bodies such as stars, galaxies, and quasars and further our understanding of the universe.
+        Stellar objects such as stars, and galaxies, are observable to the naked eye. However, what we see is just a twinkle in the night sky. To truly know what the role of these objects play, it is important to classify them correctly. By leveraging data collected by probes we can use ML and statistical analysis to distinguish between bodies such as stars, galaxies, and quasars and further our understanding of the universe.
+
     </p>
 
     <h2>Methods</h2>
     <p>
-        In order to perform ML analysis, we need to devise a plan for the pre-processing and ML model methods that we will employ to train the model and evaluate performance. 
-        For this we break our methods down into data preprocessing steps where we clean our dataset and ensure computations are efficient, and use ML supervised learning models to train models and validate performances through accuracies and hyperparameter tuning. 
-    </p>
+        In order to perform ML analysis, we need to devise a plan for the pre-processing and ML model methods that we will employ to train the model and evaluate performance. For this we break our methods down into data preprocessing steps where we clean our dataset and ensure computations are efficient, and use ML supervised learning models to train models and validate performances through accuracies and hyperparameter tuning. 
+</p>
 
     <h3>Preprocessing</h3>
     <p>
-        Firstly, we look at the preprocessing models that we have. One methodology we plan on employing is feature-pruning, for which we will remove any column entries that are insignificant for the training of our model, especially columns that may just be identifiers. 
-        We can use SKLearn function transformers for feature engineering, which we will do as applicable based on scientific reasoning for different data columns like the brightness features. 
-        The dataset is relatively clean, but we will use simple imputers for any missing data that we find. 
-        For large data values which might be computationally expensive, we will use some form of standardizing to ensure that the data is less expensive to work with. 
-        Also for model training, we know that the classes themselves have different numbers of entries, so we will handle class balancing as well.
+        Firstly, we look at the preprocessing models that we have. One methodology we plan on employing is feature-pruning, for which we will remove any column entries that are insignificant for the training of our model, especially columns that may just be identifiers. We can use SKLearn function transformers for feature engineering, which we will do as applicable based on scientific reasoning for different data columns like the brightness features. The dataset is relatively clean, but we will use simple imputers for any missing data that we find. For large data values which might be computationally expensive, we will use some form of standardizing to ensure that the data is less expensive to work with. Also for model training, we know that the classes themselves have different numbers of entries, so we will handle class balancing as well.
+
     </p>
 
     <h3>Machine Learning Models</h3>
     <p>
-        Next, we look at the ML models that we will employ. For these, we use SciKitLearn’s libraries, and fine tune them based on our requirements. 
-        We will analyse the performance differences for different models, including Logistic Regression, SVMs, Random Forests, Gradient Boosting, and Multilayer Perceptron NNs. 
+        Next, we look at the ML models that we will employ. For these, we use SciKitLearn’s libraries, and fine tune them based on our requirements. We will analyse the performance differences for different models, including Logistic Regression, SVMs, Random Forests, Gradient Boosting, and Multilayer Perceptron NNs. 
+
     </p>
 
     <h2>Results and Discussion</h2>
     <p>
-        Our primary metrics for the results is the accuracy that we get for various models, based on the model types after fine tuning. 
-        We will also look at the per-class precision, meaning that per class we’ll see what percent of objects were correctly predicted for that class. 
-        Finally, we will see the F1 score to ensure that the majority class isnt dominating the entire models. 
+        Our primary metrics for the results is the accuracy that we get for various models, based on the model types after fine tuning. We will also look at the per-class precision, meaning that per class we’ll see what percent of objects were correctly predicted for that class. Finally, we will see the F1 score to ensure that the majority class isn’t dominating the entire models.
     </p>
     <p>
-        Project goals: we aim to find high accuracy, and identify the model that will provide this highest accuracy. 
-        We also want to account for sustainability by ensuring that we maintain computational efficiency with our models and data processing. 
+        Project goals: we aim to find high accuracy, and identify the model that will provide this highest accuracy. We also want to account for sustainability by ensuring that we maintain computational efficiency with our models and data processing. 
     </p>
     <p>
-        We expect to see high accuracies for all models, with the best performance coming from MLPs (since they handle complex features well) and Random Forests (since they work well for correlated features).
+        
+We expect to see high accuracies for all models, with the best performance coming from MLPs (since they handle complex features well) and Random Forests (since they work well for correlated features).
+
     </p>
 
     <h2>References</h2>
