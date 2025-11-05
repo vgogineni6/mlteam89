@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Proposal</title>
+    <title>ML Team 89</title>
 </head>
 <body>
-    <h1>ML TEAM 89 - Project Proposal</h1>
+    <h1>ML TEAM 89 - Project Proposal and Midterm Checkpoint</h1>
 
     <h2>Introduction/Background</h2>
     <p>
         Stars, galaxies, and quasars need to be classified to analyze the structures of celestial formations. While telescope observations may be enough, datasets featuring different celestial objects can help classify them autonomously. We will classify stars, galaxies, and quasars in this project.
     </p>
 
-    <h2>Literature Review</h2>
+    <h3>Literature Review</h3>
     <p>
         There are several methods to classify celestial objects currently using ML. There is a 2023 paper that compares Random Forest, XGBoost, and K-NN for classifying galaxies, quasars, and stars (Zeraatgari et al.). This paper reported high accuracy for XGBoost and ensemble learning that included Random Forest (Zeraatgari et al.). There is research that suggests that the most important groups of features for classification are photometry, colors, and morphology (von Marttens et al., 2023). Finally, deep learning methods have been used on SDSS data that showed how CNNs and photometric images can be used for classification, with a peak accuracy of 90.7% (He et al., 2021). In comparison to XGBoost and Random Forest’s accuracy of 98.93%, deep learning methods may not perform as well but offer a suitable alternative (Zeraatgari et al.).
 
     </p>
 
-    <h2>Dataset Description</h2>
+    <h3>Dataset Description</h3>
     <p>
         The “Stellar Classification Dataset” is from Kaggle. The data is compiled from the Sloan Digital Sky Survey Data Release 17. There are 100,000 rows of data with 17 features/columns. The 18th column is the class, which includes the labels for the data. The labels can be GALAXY, STAR, or QSO (which is quasar).
 
     </p>
 
-    <h2>Dataset</h2>
+    <h3>Dataset</h3>
     <p>
         Name: Stellar Classification Dataset<br>
 URL: <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17/data">Dataset URL</a>
@@ -46,7 +46,7 @@ URL: <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification
 
     </p>
 
-    <h2>Methods</h2>
+    <h2>Methods (Project Proposal)</h2>
     <p>
         In order to perform ML analysis, we need to devise a plan for the pre-processing and ML model methods that we will employ to train the model and evaluate performance. For this we break our methods down into data preprocessing steps where we clean our dataset and ensure computations are efficient, and use ML supervised learning models to train models and validate performances through accuracies and hyperparameter tuning. 
 </p>
@@ -63,7 +63,25 @@ URL: <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification
 
     </p>
 
-    <h2>Results and Discussion</h2>
+    <h2>Methods (Midterm Checkpoint)</h2>
+    <p>
+        As mentioned in our proposal, we decided to do multiple data preprocessing methods to ensure our data is ready to be used to train the model of our choosing. For this midterm checkpoint, we have implemented the following preprocessing methods:
+    </p>
+    <ol>
+        <li><b>Feature Pruning:</b> We started off with this to remove any unnecessary identifiers and metadata that doesn’t particularly help with our classification. This ensures that the model only focuses on the features relevant to our stellar data.</li>
+        <li><b>Train-Test Split & Standardization:</b> We then split the data into two subsets: 80% for training, and 20% for testing while also separating the data’s features (X) from the target labels (Y). This ensures all the model’s evaluations are unbiased. We also applied StandardScaler to all numerical features present  to ensure consistent feature scaling. This scaler was then applied to our training data.</li>
+        <li><b>Class Balancing:</b> After this, we saw that the class categories were quite imbalanced. Specifically, we observed that ‘GALAXY’ accounted for roughly 59% of the dataset, ‘STAR’ roughly 21%, and 'QSO' roughly 20%. To ensure the model would not be biased towards the majority class, we applied smote on the training data. This creates synthetic samples for the two minority classes (‘STAR’ and ‘QSO’) based on their nearest neighbours thus effectively balancing the distribution of classes in the training dataset.</li>
+        <li><b>Label Encoding:</b> Finally, we applied label encoding so that each class (‘GALAXY’, ‘STAR’, ‘QSO’) maps to an integer. This is especially important so that our chosen ML models can properly interpret and process the target data.</li>
+    </ol>
+    <p>
+        Once we were done preprocessing the data, we could start implementing supervised learning methods on the dataset:
+    </p>
+    <ol>
+        <li><b>Logistic Regression:</b> This model serves as a baseline linear classifier. What this means is it helps by finding the best line that separates the three classes - ‘GALAXY’, ‘STAR’, ‘QSO’. It does so by calculating probabilities for each class using the sigmoid function (which is inbuilt). We chose this as it is a good starting point and helps us understand how the data can be separated linearly.</li>
+        <li><b>Random Forest:</b> Next we trained a Random Forest model which uses decision trees. It works by building many different decision trees, where each tree is trained on a slightly different part of the data, and combining each tree’s predictions to make a final decision. We chose random forest as although logistic regression is a good starting point, it does not capture complex non linear relationships which are ingrained in datasets like ours. Features like brightness, color, redshift, etc all interact to distinguish between stars, galaxies, and quasars and random forest is good at capturing these interactions in its predictions.</li>
+    </ol>
+
+    <h2>Results and Discussion (Project Proposal)</h2>
     <p>
         Our primary metrics for the results is the accuracy that we get for various models, based on the model types after fine tuning. We will also look at the per-class precision, meaning that per class we’ll see what percent of objects were correctly predicted for that class. Finally, we will see the F1 score to ensure that the majority class isn’t dominating the entire models.
     </p>
@@ -76,6 +94,42 @@ We expect to see high accuracies for all models, with the best performance comin
 
     </p>
 
+    <h2>Results and Discussion (Midterm Checkpoint)</h2>
+    <p>Finally, after training the two models highlighted above, we must discuss the results obtained from them. For each model, we looked at accuracy, precision, recall, f1 score, confusion matrix, and per class metrics to ensure we have an all-rounded, generic insight into the performance of the model:</p>
+    <ol>
+        <li><b>Accuracy:</b> measures how often the model’s predictions are correct overall. The Logistic Regression model has an accuracy of 94.65% while the Random Forest model has an accuracy of 97.87%.
+        </li>
+        <li><b>Precision:</b> tells us how many of the predicted objects for a given class were actually correct. The Logistic Regression model has a precision of 94.79% while the Random Forest model has a precision of 97.86%.</li>
+        <li><b>Recall:</b> measures how well the model identified all objects belonging to a given class. The Logistic Regression model has a Recall of 94.65% while the Random Forest model has a Recall of 97.86%.</li>
+        <li><b>F1-Score:</b> combines precision and recall into a single number, balancing both. The Logistic Regression model has a F1-Score of 94.66% while the Random Forest model has a F1-Score of 97.86%.</li>
+        <li><b>Confusion Matrix:</b> shows detailed counts of correct and incorrect predictions for each class.</li>
+        <li><b>Per Class Metrics:</b> highlight the model’s strengths and weaknesses individually.</li>
+    </ol>
+    <p>
+        After analyzing the generic performance of both models, we decided to use Random Forest to dive deeper into the role each feature plays for classification. Each value indicates how much each feature helped reduce uncertainty when splitting the decision trees.
+    </p>
+    <img src="rf-feat-imp.jpg" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>
+        From the plot above it is clear that ‘redshift’ contributes the most to reducing uncertainty. This aligns with our understanding of the universe as well as redshift gives us the object's position and velocity with respect to earth, which is an important thing to help distinguish if an object is a star, galaxy, or quasar. Other features such as the photometric magnitudes (u, g, r, i, z) also play some role but no feature comes close to the role that redshift plays.
+    </p>
+    <p>
+        Because of this result, we decided to further analyze the effect redshift plays in determining what a stellar object is. To do this, we first divided the data into 3 groups based on redshift values: low (<0.5), mid (>=0.5 and <1), high (>=1) and then compared the results of the models on these 3 groups.
+    </p>
+    <img src="acc-redshift.jpg" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>
+        As seen in the plot above, both models classify much more accurately with low and high redshift values with logistic regression having an accuracy of ~94% and random forest having an accuracy of ~98%. However, when it comes to mid redshift values, the classification accuracy for both models drops considerably (75% for logistic regression and 88% for random forest). This leads to the conclusion that objects with redshift values between 0.5 and 1 are harder to classify and when the model falls back to other features (like photometric magnitudes) it finds that there is overlap in these values between stars, galaxies, and quasars.
+    </p>
+    <p>
+        Thus, through the analyses that we have performed, it is clear that redshift plays a crucial role in classifying stellar objects. Also, from the results it is also clear that Random Forest is much better at handling complex relationships as it consistently performed better (in all metrics) over the logistic regression model.
+    </p>
+    <h3>Next Steps:</h3>
+    <p>For the last part of our project we aim to do the following:</p>
+    <ol>
+        <li><b>Hyperparameter tuning:</b> We will use techniques like Grid or Random Search to fine tune parameters of the Random Forest model such as tree depth, and minimum samples per split to ensure that our model is not overfitting.
+        </li>
+        <li><b>Feature Engineering:</b> We will derive new features. For example, we saw in the results that apart from redshift, photometric magnitudes also played a decently high role in classification. So features like differences between photometric magnitudes etc would be good to see how they affect classification.</li>
+        <li><b>More model comparisons:</b> We plan to use two additional models: KNN and MLP. By using these models we can further evaluate using distance based clustering and neural networks the classification accuracy of these models.</li>
+    </ol>
     <h2>References</h2>
     <p>
         Zeraatgari, Fatemeh Zahra, et al. “Machine Learning-Based Photometric Classification of Galaxies, Quasars, Emission-Line Galaxies, and Stars.” 
@@ -100,13 +154,70 @@ We expect to see high accuracies for all models, with the best performance comin
 
     <h2>Gantt Chart</h2>
     <p><a href="https://docs.google.com/spreadsheets/d/17i_9VykRdETPD9Dd1OORQ9lNznGvdez-6PSElU9oeYc/edit?usp=sharing">Gantt Chart Link</a></p>
+
     <h2>Contributions</h2>
-    <ul>
-        <li>Ved Srivathsa: Methods, Video Recording, Github Page</li>
-        <li>Vasanth Gogineni: Introduction/Background, Video Recording, Github Page</li>
-        <li>Akshay Bhave: Problem Definition, Video Recording, Github Page</li>
-        <li>Lindsey Ehrlich: Potential Results and Discussion, Github Page</li>
-        <li>Arnav Jha: References, Github Page</li>
-    </ul>
+    <table border="1">
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Midterm Contributions</b></th>
+        </tr>
+        <tr>
+            <td>Ved Srivathsa</td>
+            <td>Feature Importance & Redshift Analysis, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Vasanth Gogineni</td>
+            <td>Logistic Regression Results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Akshay Bhave</td>
+            <td>Data Preprocessing, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Lindsey Ehrlich</td>
+            <td>Random Forest Results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Arnav Jha</td>
+            <td>Model Training, Report Writing
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table border="1">
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Project Proposal Contributions</b></th>
+        </tr>
+        <tr>
+            <td>Ved Srivathsa</td>
+            <td>Methods, Video Recording, Github Page
+            </td>
+        </tr>
+        <tr>
+            <td>Vasanth Gogineni</td>
+            <td>Introduction/Background, Video Recording, Github Page
+            </td>
+        </tr>
+        <tr>
+            <td>Akshay Bhave</td>
+            <td>Problem Definition, Video Recording, Github Page
+            </td>
+        </tr>
+        <tr>
+            <td>Lindsey Ehrlich</td>
+            <td>Potential Results and Discussion, Github Page
+            </td>
+        </tr>
+        <tr>
+            <td>Arnav Jha</td>
+            <td>References, Github Page
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
