@@ -81,6 +81,15 @@ URL: <a href="https://www.kaggle.com/datasets/fedesoriano/stellar-classification
         <li><b>Random Forest:</b> Next we trained a Random Forest model which uses decision trees. It works by building many different decision trees, where each tree is trained on a slightly different part of the data, and combining each tree’s predictions to make a final decision. We chose random forest as although logistic regression is a good starting point, it does not capture complex non linear relationships which are ingrained in datasets like ours. Features like brightness, color, redshift, etc all interact to distinguish between stars, galaxies, and quasars and random forest is good at capturing these interactions in its predictions.</li>
     </ol>
 
+    <h2>Methods (Project Final)</h2>
+    <p><b>New model: Multilayer Perceptron (MLP)</b></p>
+    <p>
+        In the midterm checkpoint we highlighted the next steps we planned on taking, however we have decided to update those planned steps. Firstly, we will be using a MLP (Multilayer Perceptron) model to further analyze our dataset using an artificial neural network. This will be done by analyzing the results using common scores that we implemented for our Random Forest and Logistic Regression models. Finally, we will also be doing photometric analysis on our models to see how they classify our data using g-r values into blue, intermediate, and red objects.
+    </p>
+    <p>
+        We chose to add an MLP specifically because both Logistic Regression and Random Forest showed clear limitations when modeling the nonlinear regions of the data, particularly in the mid-redshift range. This is evident in the “Accuracy based on Redshift Range” graph, where Logistic Regression drops to roughly 75% and Random Forest drops to about 88% for objects with redshift between 0.5 and 1.0. In this region, the photometric magnitudes of galaxies and quasars overlap in ways that cannot be captured by linear boundaries or by tree-based threshold splits alone. Since the mid-redshift region introduces curved, continuous, and interacting feature patterns, we incorporated an MLP to model these nonlinear relationships more effectively through its hidden layers and nonlinear activation functions.
+    </p>
+
     <h2>Results and Discussion (Project Proposal)</h2>
     <p>
         Our primary metrics for the results is the accuracy that we get for various models, based on the model types after fine tuning. We will also look at the per-class precision, meaning that per class we’ll see what percent of objects were correctly predicted for that class. Finally, we will see the F1 score to ensure that the majority class isn’t dominating the entire models.
@@ -130,6 +139,48 @@ We expect to see high accuracies for all models, with the best performance comin
         <li><b>Feature Engineering:</b> We will derive new features. For example, we saw in the results that apart from redshift, photometric magnitudes also played a decently high role in classification. So features like differences between photometric magnitudes etc would be good to see how they affect classification.</li>
         <li><b>More model comparisons:</b> We plan to use two additional models: KNN and MLP. By using these models we can further evaluate using distance based clustering and neural networks the classification accuracy of these models.</li>
     </ol>
+
+    <h2>Results and Discussion (Project Final)</h2>
+    <p>We will expand on our results from the midterm checkpoint.</p><br>
+    <p>We used a MLP with two hidden layers of 100 and 50 neurons because this architecture captures the nonlinear relationships present in photometric and redshift features without overfitting. The MLPClassifier uses ReLU activation function, which introduces nonlinearity and allows the neural network to model nonlinear decision boundaries. This was something both Logistic Regression and Random Forest failed to do in the mid-redshift region. The first layer with 100 neurons learns high-level feature interactions (like how redshift interacts with color indices) and the second 50 neuron layer finds more discriminative patterns for classification. This architecture gave us a balance between classification accuracy and training stability for our dataset, as seen in MLP’s strong performance across all classes.</p>
+    <p>This MLP achieved the following results.    </p><br>
+    <p><b>Overall performance:</b>   </p>
+    <ol>
+        <li><b>Accuracy:</b>96.91%</li>
+        <li><b>Precision:</b> 96.94%. This tells us that MLP predictions are correct 96.94% of the time.            .</li>
+        <li><b>Recall:</b> 96.21%. This tells us that MLP identifies all actual instances of the class 96.21% of the time.        </li>
+        <li><b>F1-Score:</b>96.92%. This tells us that the MLP is not biased as there is an almost perfect balance between Precision and Recall.        </li>
+        <li><b>Confusion Matrix:</b> Shows classification performance across all 3 classes. For galaxies, 11447 instances were correctly classified while 286 were incorrectly classified as quasars and 106 as stars. For quasars, 3617 instances were correctly classified while 286 were incorrectly classified galaxies and 3 as stars. For stars, 4318 were correctly classified while 28 were incorrectly classified as galaxies and 0 as quasars.        </li>
+        <li><b>Per Class Metrics/Performance:</b> For Galaxy classification, precision was 98%, recall 97%, f1 97%. Since there were 11839 instances of galaxies in our dataset, this performance for our largest class is quite good. The small difference between precision and recall suggests that some galaxies are being incorrectly classified (and from our confusion matrix we know that some are incorrectly classified as quasars).
+            For Quasar classification, precision was 93%, recall 95%, f1 94%. This class seemed to be the most difficult to classify as it had the lowest accuracy.
+            For Star classification, precision was 98%, recall 99%, f1 98%. The model almost perfectly classified all instances of stars (from the confusion matrix we know only 28 instances were misclassified).
+            </li>
+    </ol>
+    <p>Given that we have the same common scores for Random Forest and Logistic Regression, we can compare the three models using the graph shown below:
+    </p>
+    <img src="finalGraph1.png" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>The chart shows that the three models all perform very strongly, with Random Forest achieving the highest precision, recall, f1-score, and accuracy overall. MLP comes second, despite our expectation that the nonlinearity would model a decision boundary better than Random Forest. Logistic regression performs the worst given that it is a linear model that cannot model the same complexity as MLP or Random Forest. Therefore, we can say that the linear decision boundary from logistic regression has been improved on with the introduction of MLP.
+    </p>
+    <p>
+        The confusion matrices show similar results for all 3 models, giving us information about the classes themselves. The order of classes is GALAXY, QSO, STAR. So, we see lower proportions of true positives when classifying QSO and STAR. This tells us that the redshift (most important feature) is not enough to classify these types of stellar objects. This is because the data shows that high redshift objects are often QSOs, while low redshift objects are mostly galaxies. The magnitudes help distinguish stars from galaxies but overlap significantly with quasars in the mid-redshift range. So, we now see a limitation in our results, where all three models could not distinguish effectively between QSO and STAR when relying heavily on redshift feature.
+    </p>
+    <p>
+        This can be seen in the chart below. There is high accuracy in classification for high and low redshift ranges for all 3 models. But in the mid-range, where QSO and STAR lie, there is a heavy drop in accuracy.
+    </p>
+    <img src="finalGraph2.png" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>
+        To better understand why our models struggled in the mid-redshift range and for astrophysical context, we introduced a photometric color based evaluation using the g-r color index. It is a measurement of a stellar object color based on the difference in brightness between its green (g) and red (r) light. If a stellar object has a low (g-r) index, it will be hotter and appear bluer or whiter. If it has high (g-r) index, it is cooler and appears redder.
+    </p>
+    <img src="finalGraph3.png" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>By analyzing the test results using 3 groups (blue, intermediate, and red objects) we were able to measure how classification accuracy changes for different types of stellar objects. This analysis reveals patterns that are not visible in overall accuracy alone. All models perform strongly on intermediate (Blue-Red) objects, and the MLP shows a clear advantage on red objects (which are likely stars based on the next graph). These results demonstrate that color provides additional classification ability beyond redshift and magnitudes, and highlight how nonlinear models like the MLP benefit from photometric data. This step allowed us to explore where model performance improves or drops based on another feature, giving us a deeper understanding of classification behavior. We can see this using the graph below:
+    </p>
+    <img src="finalGraph4.png" width="50%" height="50%" style="display:block; margin-left:auto; margin-right:auto">
+    <p>
+        The above graph explains why these performance differences arise. The histogram of true g-r colors reveals that galaxies cluster around intermediate color values (g-r ranging from 0.0-0.5), stars span a wider range of both blue and near-red colors, and quasars occupy the bluest end of the distribution (g-r < -0.3). However, the distributions overlap significantly between stars and galaxies, and between stars and quasars in the mid-blue region. This overlap directly reflects the patterns seen in the confusion matrices for all three models, since the proportion of overlap is greater for STAR and QSO. This means the misclassifications evident in the confusion matrices for STAR and QSO can be explained by how several features are very similar for STAR and QSO, which share very similar g-r color profiles.
+    </p>
+    <p>
+        Overall, our results show that while all three models perform well on this dataset, Random Forest remains the strongest classifier, with MLP providing competitive performance and clear improvements over Logistic Regression. This is because MLP introduces layers with nonlinearity that help classify more complex relationships. We optimized our models very well, and investigated various features like redshift and photometric features to further investigate classifying between STAR and QSO objects. We were able to demonstrate where each model succeeds using the several graphs above. Through this expanded analysis, we achieved a more complete understanding of the dataset, the behavior of our models, and the astrophysical factors that affect classification performance.
+    </p>
     <h2>References</h2>
     <p>
         Zeraatgari, Fatemeh Zahra, et al. “Machine Learning-Based Photometric Classification of Galaxies, Quasars, Emission-Line Galaxies, and Stars.” 
@@ -156,6 +207,38 @@ We expect to see high accuracies for all models, with the best performance comin
     <p><a href="https://docs.google.com/spreadsheets/d/17i_9VykRdETPD9Dd1OORQ9lNznGvdez-6PSElU9oeYc/edit?usp=sharing">Gantt Chart Link</a></p>
 
     <h2>Contributions</h2>
+    <table border="1">
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Final Contributions</b></th>
+        </tr>
+        <tr>
+            <td>Ved Srivathsa</td>
+            <td>Feature Importance & Redshift Analysis, Random Forest Results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Vasanth Gogineni</td>
+            <td>Logistic Regression Results, MLP Results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Akshay Bhave</td>
+            <td>Data Preprocessing, MLP results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Lindsey Ehrlich</td>
+            <td>Potential Results and Discussion, Random Forest Results, Report Writing
+            </td>
+        </tr>
+        <tr>
+            <td>Arnav Jha</td>
+            <td>Model Training, Report Writing, Final Presentation Slides
+            </td>
+        </tr>
+    </table>
+    <br>
     <table border="1">
         <tr>
             <th><b>Name</b></th>
