@@ -141,15 +141,15 @@ We expect to see high accuracies for all models, with the best performance comin
     </ol>
 
     <h2>Results and Discussion (Project Final)</h2>
-    <p>We will expand on our results from the midterm checkpoint.</p><br>
+    <p>We will expand on our results from the midterm checkpoint.</p>
     <p>We used a MLP with two hidden layers of 100 and 50 neurons because this architecture captures the nonlinear relationships present in photometric and redshift features without overfitting. The MLPClassifier uses ReLU activation function, which introduces nonlinearity and allows the neural network to model nonlinear decision boundaries. This was something both Logistic Regression and Random Forest failed to do in the mid-redshift region. The first layer with 100 neurons learns high-level feature interactions (like how redshift interacts with color indices) and the second 50 neuron layer finds more discriminative patterns for classification. This architecture gave us a balance between classification accuracy and training stability for our dataset, as seen in MLP’s strong performance across all classes.</p>
-    <p>This MLP achieved the following results.    </p><br>
+    <p>This MLP achieved the following results.    </p>
     <p><b>Overall performance:</b>   </p>
     <ol>
-        <li><b>Accuracy:</b>96.91%</li>
+        <li><b>Accuracy:</b> 96.91%</li>
         <li><b>Precision:</b> 96.94%. This tells us that MLP predictions are correct 96.94% of the time.            .</li>
         <li><b>Recall:</b> 96.21%. This tells us that MLP identifies all actual instances of the class 96.21% of the time.        </li>
-        <li><b>F1-Score:</b>96.92%. This tells us that the MLP is not biased as there is an almost perfect balance between Precision and Recall.        </li>
+        <li><b>F1-Score:</b> 96.92%. This tells us that the MLP is not biased as there is an almost perfect balance between Precision and Recall.        </li>
         <li><b>Confusion Matrix:</b> Shows classification performance across all 3 classes. For galaxies, 11447 instances were correctly classified while 286 were incorrectly classified as quasars and 106 as stars. For quasars, 3617 instances were correctly classified while 286 were incorrectly classified galaxies and 3 as stars. For stars, 4318 were correctly classified while 28 were incorrectly classified as galaxies and 0 as quasars.        </li>
         <li><b>Per Class Metrics/Performance:</b> For Galaxy classification, precision was 98%, recall 97%, f1 97%. Since there were 11839 instances of galaxies in our dataset, this performance for our largest class is quite good. The small difference between precision and recall suggests that some galaxies are being incorrectly classified (and from our confusion matrix we know that some are incorrectly classified as quasars).
             For Quasar classification, precision was 93%, recall 95%, f1 94%. This class seemed to be the most difficult to classify as it had the lowest accuracy.
